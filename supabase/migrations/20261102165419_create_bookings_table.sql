@@ -77,3 +77,5 @@ $$;
 
 REVOKE EXECUTE ON FUNCTION public.taken_slots(date) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.taken_slots(date) TO anon;
+
+NOTIFY pgrst, 'reload schema';
