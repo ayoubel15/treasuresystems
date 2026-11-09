@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --color-ink: #080a09;
+    --color-forest: #123d2a;
+    --color-primary: #1fa463;
+    --color-accent: #39ff88;
+    --color-white: #f5f7f6;
+  }
+
+  html {
+    background-color: var(--color-ink);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink text-cream antialiased;
+    line-height: 1.5;
+    font-family: 'Space Mono', 'IBM Plex Sans Arabic', monospace;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(57, 255, 136, 0.35);
+    color: #f5f7f6;
+  }
+
+  a,
+  button,
+  input,
+  textarea {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.1;
+  }
+
+  .font-brand {
+    font-family: 'Anton SC', sans-serif;
+  }
+
+  html[lang='ar'] .font-display {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(57, 255, 136, 0.9);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .dot-grid {
+    background-image: radial-gradient(rgba(247, 241, 229, 0.14) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .ambient-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 70vmax;
+    height: 70vmax;
+    margin-left: -35vmax;
+    margin-top: -35vmax;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(31, 164, 99, 0.38), transparent 65%);
+    animation: ambient-drift 18s ease-in-out infinite;
+  }
+
+  .pointer-glow {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    left: var(--mx, 50%);
+    top: var(--my, 50%);
+    transform: translate(-50%, -50%);
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(25, 219, 146, 0.22), transparent 60%);
+    transition: left 0.5s ease-out, top 0.5s ease-out;
+    pointer-events: none;
+  }
+}
+
+@keyframes ambient-drift {
+  0%,
+  100% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 4%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ambient-glow {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
