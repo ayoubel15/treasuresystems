@@ -4,17 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#010504',
-        forest: '#0C3C26',
-        cream: '#F7F1E5',
+        ink: '#080A09',
+        forest: '#123D2A',
+        paper: '#F5F7F6',
+        cream: '#F5F7F6',
+        primary: '#1FA463',
+        accent: '#39FF88',
         emerald: {
-          DEFAULT: '#0AC57A',
-          light: '#19DB92',
-          deep: '#003A19',
+          DEFAULT: '#1FA463',
+          light: '#39FF88',
+          deep: '#123D2A',
         },
       },
       fontFamily: {
-        sans: ['"Space Mono"', '"IBM Plex Sans Arabic"', 'monospace'],
+        sans: ['"IBM Plex Sans Arabic"', 'sans-serif'],
         display: ['"Anton SC"', '"IBM Plex Sans Arabic"', 'sans-serif'],
       },
     },

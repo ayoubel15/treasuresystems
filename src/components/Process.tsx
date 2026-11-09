@@ -1,31 +1,26 @@
-import { motion } from 'framer-motion';
-import BackgroundMedia from '@/components/BackgroundMedia';
 import { useLanguage } from '@/hooks/useLanguage';
 
 export default function Process() {
   const { t } = useLanguage();
 
   return (
-    <section id="process" className="relative flex min-h-screen scroll-mt-24 items-center overflow-hidden px-6 py-24 sm:px-10">
-      <BackgroundMedia src="" />
+    <section id="process" className="scroll-mt-20 bg-paper px-5 py-20 text-ink sm:px-8 sm:py-28 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-5 md:grid-cols-[1fr_0.7fr] md:items-end md:gap-12">
+          <div>
+            <p className="eyebrow text-forest">{t.nav.process}</p>
+            <h2 className="font-display mt-5 max-w-3xl text-4xl leading-tight sm:text-5xl">{t.process.heading}</h2>
+          </div>
+          <p className="max-w-xl text-base leading-8 text-ink/65">{t.process.intro}</p>
+        </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl">
-        <h2 className="font-display text-5xl uppercase text-cream sm:text-7xl">{t.process.heading}</h2>
-
-        <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {t.process.steps.map((step, index) => (
-            <motion.li
-              key={step.number}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="flex flex-col gap-4 rounded-2xl border border-cream/10 bg-forest/40 p-6 transition-colors duration-300 hover:border-emerald"
-            >
-              <span className="font-display text-5xl leading-none text-emerald">{step.number}</span>
-              <h3 className="font-display text-xl uppercase text-cream sm:text-2xl">{step.title}</h3>
-              <p className="text-sm leading-[1.5] text-cream/75">{step.description}</p>
-            </motion.li>
+        <ol className="mt-12 grid border-t border-ink/15 sm:grid-cols-2 lg:grid-cols-4">
+          {t.process.steps.map((step) => (
+            <li key={step.number} className="border-b border-ink/15 py-6 sm:min-h-56 sm:border-e sm:px-5 sm:py-8 lg:px-7">
+              <span className="font-display text-4xl text-forest">{step.number}</span>
+              <h3 className="mt-7 text-xl font-semibold leading-snug">{step.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-ink/65">{step.description}</p>
+            </li>
           ))}
         </ol>
       </div>

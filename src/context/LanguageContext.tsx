@@ -32,7 +32,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement;
     root.lang = lang;
     root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.title = (lang === 'ar' ? ar : en).meta.title;
+    const dictionary = lang === 'ar' ? ar : en;
+    document.title = dictionary.meta.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', dictionary.meta.description);
     storeLang(lang);
   }, [lang]);
 

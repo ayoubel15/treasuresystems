@@ -1,90 +1,70 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpLeft, Menu, X } from 'lucide-react';
 import Logo from '@/components/Logo';
-import { ScrambleText } from '@/components/ScrambleText';
-import SquashHamburger from '@/components/SquashHamburger';
 import { useLanguage } from '@/hooks/useLanguage';
 
-type NavbarProps = {
-  onBook: () => void;
-};
-
-export default function Navbar({ onBook }: NavbarProps) {
+export default function Navbar() {
   const { t, toggleLang } = useLanguage();
   const [open, setOpen] = useState(false);
 
   const links = [
     { href: '#services', label: t.nav.services },
+    { href: '#demo', label: t.nav.demo },
     { href: '#projects', label: t.nav.work },
     { href: '#process', label: t.nav.process },
+    { href: '#faq', label: t.nav.faq },
   ];
 
   const close = () => setOpen(false);
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <motion.nav
-        layout
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        aria-label={t.nav.menu}
-        className="pointer-events-auto overflow-hidden rounded-[28px] border border-cream/15 bg-ink/80 shadow-[0_12px_40px_rgba(0,0,0,0.55)] backdrop-blur-md"
-      >
-        <div className="flex h-14 items-center gap-3 ps-3 pe-2">
-          <a href="#top" onClick={close} className="flex items-center gap-2">
-            <Logo className="h-7 w-7" />
-            <span className="font-brand text-sm tracking-[0.2em] text-cream">TREASURE</span>
-          </a>
-          <SquashHamburger open={open} onToggle={() => setOpen((value) => !value)} label={t.nav.menu} />
+    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper/95 text-ink backdrop-blur-sm">
+      <nav aria-label={t.nav.menu} className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
+        <a href="#top" onClick={close} className="flex shrink-0 items-center gap-2" aria-label="Treasure Systems">
+          <Logo className="h-8 w-8" />
+          <span className="font-brand text-sm text-forest">TREASURE SYSTEMS</span>
+        </a>
+
+        <div className="hidden items-center gap-7 md:flex">
+          <ul className="flex items-center gap-6">
+            {links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} className="text-sm text-ink/70 transition-colors hover:text-forest">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+          <button type="button" onClick={toggleLang} className="border-s border-ink/15 ps-5 text-sm font-semibold text-forest" aria-label={t.nav.toggle}>
+            {t.nav.toggle}
+          </button>
+          <a href="#contact" className="button-primary py-2.5">{t.nav.contact}<ArrowUpLeft aria-hidden="true" className="h-4 w-4" /></a>
         </div>
 
-        <AnimatePresence initial={false}>
-          {open && (
-            <motion.div
-              key="panel"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, delay: 0.05 }}
-              className="w-[min(88vw,400px)] px-3 pb-4"
-            >
-              <ul className="flex flex-col gap-1">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      onClick={close}
-                      className="group flex items-center justify-between rounded-2xl px-4 py-3 text-lg text-cream transition-colors hover:bg-cream/5 hover:text-emerald-light"
-                    >
-                      <ScrambleText text={link.label} />
-                      <ArrowUpRight className="h-4 w-4 opacity-40 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-3 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    close();
-                    onBook();
-                  }}
-                  className="flex-1 rounded-full bg-emerald px-5 py-3 text-sm font-bold text-ink transition-colors hover:bg-emerald-light"
-                >
-                  {t.nav.book}
-                </button>
-                <button
-                  type="button"
-                  onClick={toggleLang}
-                  className="rounded-full border border-cream/20 px-4 py-3 text-sm text-cream transition-colors hover:border-emerald"
-                >
-                  {t.nav.toggle}
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
+        <div className="flex items-center gap-3 md:hidden">
+          <button type="button" onClick={toggleLang} className="text-sm font-semibold text-forest" aria-label={t.nav.toggle}>{t.nav.toggle}</button>
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-label={open ? t.nav.closeMenu : t.nav.menu}
+            className="flex h-10 w-10 items-center justify-center border border-ink/20"
+          >
+            {open ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
+          </button>
+        </div>
+      </nav>
+
+      {open && (
+        <div className="border-t border-ink/10 bg-paper px-5 py-4 md:hidden">
+          <ul className="mx-auto flex max-w-7xl flex-col">
+            {links.map((link) => (
+              <li key={link.href} className="border-b border-ink/10">
+                <a href={link.href} onClick={close} className="block py-3 text-base text-ink">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+          <a href="#contact" onClick={close} className="button-primary mt-4 w-full">{t.nav.contact}<ArrowUpLeft aria-hidden="true" className="h-4 w-4" /></a>
+        </div>
+      )}
     </header>
   );
 }

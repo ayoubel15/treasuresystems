@@ -1,43 +1,44 @@
-import { motion } from 'framer-motion';
-import { Bot, Cpu, Target, Workflow } from 'lucide-react';
-import BackgroundMedia from '@/components/BackgroundMedia';
+import { ArrowUpLeft, ClipboardList, MessageCircle, UsersRound, Workflow } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
-import { VIDEOS } from '@/lib/media';
 
-const ICONS = [Bot, Target, Cpu, Workflow];
+const ICONS = [MessageCircle, ClipboardList, UsersRound, Workflow];
 
 export default function Services() {
   const { t } = useLanguage();
 
   return (
-    <section id="services" className="relative flex min-h-screen scroll-mt-24 items-center overflow-hidden px-6 py-24 sm:px-10">
-      <BackgroundMedia src={VIDEOS.services} />
+    <section id="services" className="scroll-mt-20 bg-paper px-5 py-20 text-ink sm:px-8 sm:py-28 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-5 border-b border-ink/15 pb-8 md:grid-cols-[1fr_0.7fr] md:items-end md:gap-12">
+          <div>
+            <p className="eyebrow text-forest">{t.nav.services}</p>
+            <h2 className="font-display mt-5 max-w-3xl text-4xl leading-tight sm:text-5xl">{t.services.heading}</h2>
+          </div>
+          <p className="max-w-xl text-base leading-8 text-ink/65">{t.services.intro}</p>
+        </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl">
-        <h2 className="font-display text-5xl uppercase text-cream sm:text-7xl">{t.services.heading}</h2>
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="grid gap-x-12 md:grid-cols-2">
           {t.services.items.map((item, index) => {
             const Icon = ICONS[index];
             return (
-              <motion.article
-                key={item.tag}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group flex flex-col gap-6 rounded-2xl border border-cream/10 bg-ink/75 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-emerald"
-              >
-                <Icon className="h-8 w-8 text-emerald transition-transform duration-300 group-hover:scale-110" />
+              <li key={item.tag} className="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-ink/15 py-7 sm:grid-cols-[3.5rem_1fr] sm:gap-6 sm:py-9">
+                <span className="font-display pt-1 text-sm text-forest">0{index + 1}</span>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-emerald-light">{item.tag}</p>
-                  <h3 className="font-display mt-2 text-2xl uppercase text-cream">{item.title}</h3>
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="eyebrow text-ink/70">{item.tag.split(' / ')[1]}</p>
+                    <Icon aria-hidden="true" className="h-5 w-5 shrink-0 text-forest" />
+                  </div>
+                  <h3 className="mt-4 text-2xl font-semibold leading-snug sm:text-3xl">{item.title}</h3>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-ink/65 sm:text-base">{item.description}</p>
                 </div>
-                <p className="text-sm leading-[1.5] text-cream/75">{item.description}</p>
-              </motion.article>
+              </li>
             );
           })}
-        </div>
+        </ol>
+        <a href="#contact" className="button-text mt-8 inline-flex">
+          {t.nav.contact}
+          <ArrowUpLeft aria-hidden="true" className="h-4 w-4" />
+        </a>
       </div>
     </section>
   );

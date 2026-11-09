@@ -4,30 +4,32 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
     --color-ink: #080a09;
     --color-forest: #123d2a;
     --color-primary: #1fa463;
     --color-accent: #39ff88;
-    --color-white: #f5f7f6;
+    --color-paper: #f5f7f6;
   }
 
   html {
-    background-color: var(--color-ink);
+    background-color: var(--color-paper);
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   body {
-    @apply bg-ink text-cream antialiased;
+    @apply bg-paper text-ink antialiased;
     line-height: 1.5;
-    font-family: 'Space Mono', 'IBM Plex Sans Arabic', monospace;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
     min-height: 100vh;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
   ::selection {
-    background: rgba(57, 255, 136, 0.35);
-    color: #f5f7f6;
+    background: rgba(31, 164, 99, 0.2);
+    color: #080a09;
   }
 
   a,
@@ -48,6 +50,11 @@
     font-family: 'Anton SC', sans-serif;
   }
 
+  .font-display {
+    font-family: 'Anton SC', 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+  }
+
   html[lang='ar'] .font-display {
     font-family: 'IBM Plex Sans Arabic', sans-serif;
     font-weight: 600;
@@ -56,51 +63,30 @@
   }
 
   :focus-visible {
-    outline: 2px solid rgba(57, 255, 136, 0.9);
+    outline: 2px solid var(--color-primary);
     outline-offset: 3px;
   }
 }
 
 @layer components {
-  .dot-grid {
-    background-image: radial-gradient(rgba(247, 241, 229, 0.14) 1px, transparent 1px);
-    background-size: 28px 28px;
+  .eyebrow {
+    @apply text-xs font-semibold uppercase;
   }
 
-  .ambient-glow {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 70vmax;
-    height: 70vmax;
-    margin-left: -35vmax;
-    margin-top: -35vmax;
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(31, 164, 99, 0.38), transparent 65%);
-    animation: ambient-drift 18s ease-in-out infinite;
+  .button-primary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 bg-forest px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary;
   }
 
-  .pointer-glow {
-    position: absolute;
-    width: 520px;
-    height: 520px;
-    left: var(--mx, 50%);
-    top: var(--my, 50%);
-    transform: translate(-50%, -50%);
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(25, 219, 146, 0.22), transparent 60%);
-    transition: left 0.5s ease-out, top 0.5s ease-out;
-    pointer-events: none;
+  .button-accent {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 bg-accent px-5 py-3 text-sm font-bold text-ink transition-colors hover:bg-white;
   }
-}
 
-@keyframes ambient-drift {
-  0%,
-  100% {
-    transform: translate3d(-6%, -4%, 0) scale(1);
+  .button-outline {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 border border-white/35 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-accent hover:text-accent;
   }
-  50% {
-    transform: translate3d(6%, 4%, 0) scale(1.08);
+
+  .button-text {
+    @apply inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-primary;
   }
 }
 
